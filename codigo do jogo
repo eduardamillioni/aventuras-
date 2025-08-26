@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>História Interativa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f8ff;
+    }
+    img {
+      width: 300px;
+      border-radius: 15px;
+      margin: 10px;
+    }
+    .opcoes button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      background: #4682b4;
+      color: white;
+      cursor: pointer;
+    }
+    .opcoes button:hover {
+      background: #315f7d;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌲 História Interativa</h1>
+  <div id="historia"></div>
+  <div id="imagem"></div>
+  <div class="opcoes"></div>
+
+  <script>
+    const cenas = {
+      inicio: {
+        texto: "Você acorda em uma floresta misteriosa...",
+        imagem: "https://i.imgur.com/6h8n8eR.jpg",
+        opcoes: [
+          { texto: "🌲 Explorar a floresta", destino: "floresta" },
+          { texto: "✨ Seguir a trilha iluminada", destino: "trilha" }
+        ]
+      },
+      floresta: {
+        texto: "Você encontra uma cabana abandonada.",
+        imagem: "https://i.imgur.com/sMZxwZR.jpg",
+        opcoes: [
+          { texto: "🏚️ Entrar na cabana", destino: "cabana" },
+          { texto: "🐺 Continuar andando pela floresta", destino: "lobo" }
+        ]
+      },
+      cabana: {
+        texto: "Dentro da cabana você encontra um espírito guardião... 👻 FIM!",
+        imagem: "https://i.imgur.com/CF7vKwY.jpg",
+        opcoes: []
+      },
+      lobo: {
+        texto: "Você encontra um lobo selvagem... 🐺 FIM!",
+        imagem: "https://i.imgur.com/jqKjZZN.jpg",
+        opcoes: []
+      },
+      trilha: {
+        texto: "A trilha leva até um rio brilhante.",
+        imagem: "https://i.imgur.com/4U0p4Af.jpg",
+        opcoes: [
+          { texto: "🏞️ Atravessar o rio", destino: "vila" },
+          { texto: "🐉 Seguir pela margem", destino: "dragao" }
+        ]
+      },
+      vila: {
+        texto: "Você atravessa e encontra uma vila escondida... 🏘️ FIM!",
+        imagem: "https://i.imgur.com/1htZlfF.jpg",
+        opcoes: []
+      },
+      dragao: {
+        texto: "Um dragão aparece à beira do rio... 🐉 FIM!",
+        imagem: "https://i.imgur.com/2LjUm6a.jpg",
+        opcoes: []
+      }
+    };
+
+    function mostrarCena(cena) {
+      const conteudo = cenas[cena];
+      document.getElementById("historia").innerHTML = <p>${conteudo.texto}</p>;
+      document.getElementById("imagem").innerHTML = <img src="${conteudo.imagem}" alt="Cena">;
+      
+      const opcoesDiv = document.querySelector(".opcoes");
+      opcoesDiv.innerHTML = "";
+      conteudo.opcoes.forEach(op => {
+        const btn = document.createElement("button");
+        btn.textContent = op.texto;
+        btn.onclick = () => mostrarCena(op.destino);
+        opcoesDiv.appendChild(btn);
+      });
+    }
+
+    mostrarCena("inicio");
+  </script>
+</body>
+</html>
